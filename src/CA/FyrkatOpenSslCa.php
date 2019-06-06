@@ -31,6 +31,9 @@ class FyrkatOpenSslCa implements CaInterface
     /** @var \fyrkat\openssl\OpenSSLConfig */
     private $serverConfig;
 
+    /** @var \fyrkat\openssl\OpenSSLConfig */
+    private $clientConfig;
+
     /**
      * @param string $caDir
      */
@@ -40,6 +43,7 @@ class FyrkatOpenSslCa implements CaInterface
         $this->keyConfig = new OpenSSLConfig(OpenSSLConfig::KEY_EC);
         $this->caConfig = new OpenSSLConfig(OpenSSLConfig::X509_CA);
         $this->serverConfig = new OpenSSLConfig(OpenSSLConfig::X509_SERVER);
+        $this->clientConfig = new OpenSSLConfig(OpenSSLConfig::X509_CLIENT);
     }
 
     /**
@@ -113,6 +117,28 @@ class FyrkatOpenSslCa implements CaInterface
      */
     public function clientCert($commonName, DateTime $expiresAt)
     {
-        return [];
+        $caPrivateKey = new PrivateKey(FileIO::readFile(sprintf('%s/ca.key', $this->caDir)));
+        $caCert = new X509(FileIO::readFile(sprintf('%s/ca.crt', $this->caDir)));
+
+        $clientKey = new PrivateKey($this->keyConfig);
+        $clientCsr = CSR::generate(
+            new DN(
+                [
+                    'CN' => $commonName,
+                ]
+            ),
+            $clientKey
+        );
+
+        $clientCert = $clientCsr->sign($caCert, $caPrivateKey, 365, $this->clientConfig);
+        $clientKeyPem = '';
+        $clientKey->export($clientKeyPem, null, $this->keyConfig);
+
+        return [
+            'cert' => (string) $clientCert,
+            'key' => $clientKeyPem,
+            'valid_from' => 0, // XXX
+            'valid_to' => 0, // XXX
+        ];
     }
 }
