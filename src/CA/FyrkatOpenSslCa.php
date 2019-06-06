@@ -20,10 +20,13 @@ use LC\Portal\FileIO;
 /**
  * CA implementation based on fyrkat/openssl.
  *
- * Current limitation: it does not allow one to specify the *exact* moment the
- * certificate expires. As we currently rely on this behavior, e.g. to expire
- * issued certificates after 8 hours, this is not a complete replacement for
- * the EasyRsa backend.
+ * Current limitations:
+ * - it does not allow one to specify the *exact* moment the
+ *   certificate expires. As we currently rely on this behavior, e.g. to expire
+ *   issued certificates after 8 hours, this is not a complete replacement for
+ *   the EasyRsa backend
+ * - we cannot set the EKUs (TLS Web Server Authentication,
+ *   TLS Web Client Authentication)
  */
 class FyrkatOpenSslCa implements CaInterface
 {
