@@ -9,7 +9,7 @@
 
 namespace LC\Portal\CA;
 
-use DateTime;
+use DateTimeInterface;
 use fyrkat\openssl\CSR;
 use fyrkat\openssl\DN;
 use fyrkat\openssl\OpenSSLConfig;
@@ -40,7 +40,7 @@ class FyrkatOpenSslCa implements CaInterface
     public function __construct($caDir)
     {
         $this->caDir = $caDir;
-        $this->keyConfig = new OpenSSLConfig(OpenSSLConfig::KEY_EC);
+        $this->keyConfig = new OpenSSLConfig(OpenSSLConfig::KEY_RSA);
         $this->caConfig = new OpenSSLConfig(OpenSSLConfig::X509_CA);
         $this->serverConfig = new OpenSSLConfig(OpenSSLConfig::X509_SERVER);
         $this->clientConfig = new OpenSSLConfig(OpenSSLConfig::X509_CLIENT);
@@ -69,20 +69,12 @@ class FyrkatOpenSslCa implements CaInterface
         FileIO::writeFile(sprintf('%s/ca.key', $this->caDir), (string) $caKeyPem, 0600);
     }
 
-    /**
-     * @return string
-     */
-    public function caCert()
+    public function caCert(): string
     {
         return FileIO::readFile(sprintf('%s/ca.crt', $this->caDir));
     }
 
-    /**
-     * @param string $commonName
-     *
-     * @return array{cert:string, key:string, valid_from:int, valid_to:int}
-     */
-    public function serverCert($commonName)
+    public function serverCert(string $commonName): CertInfo
     {
         $caPrivateKey = new PrivateKey(FileIO::readFile(sprintf('%s/ca.key', $this->caDir)));
         $caCert = new X509(FileIO::readFile(sprintf('%s/ca.crt', $this->caDir)));
@@ -101,21 +93,15 @@ class FyrkatOpenSslCa implements CaInterface
         $serverKeyPem = '';
         $serverKey->export($serverKeyPem, null, $this->keyConfig);
 
-        return [
-            'cert' => (string) $serverCert,
-            'key' => $serverKeyPem,
-            'valid_from' => 0, // XXX
-            'valid_to' => 0, // XXX
-        ];
+        return new CertInfo(
+            (string) $serverCert,
+            $serverKeyPem,
+            $serverCert->getValidFrom(),
+            $serverCert->getValidTo()
+        );
     }
 
-    /**
-     * @param string    $commonName
-     * @param \DateTime $expiresAt
-     *
-     * @return array{cert:string, key:string, valid_from:int, valid_to:int}
-     */
-    public function clientCert($commonName, DateTime $expiresAt)
+    public function clientCert(string $commonName, DateTimeInterface $expiresAt): CertInfo
     {
         $caPrivateKey = new PrivateKey(FileIO::readFile(sprintf('%s/ca.key', $this->caDir)));
         $caCert = new X509(FileIO::readFile(sprintf('%s/ca.crt', $this->caDir)));
@@ -134,11 +120,11 @@ class FyrkatOpenSslCa implements CaInterface
         $clientKeyPem = '';
         $clientKey->export($clientKeyPem, null, $this->keyConfig);
 
-        return [
-            'cert' => (string) $clientCert,
-            'key' => $clientKeyPem,
-            'valid_from' => 0, // XXX
-            'valid_to' => 0, // XXX
-        ];
+        return new CertInfo(
+            (string) $clientCert,
+            $clientKeyPem,
+            $clientCert->getValidFrom(),
+            $clientCert->getValidTo()
+        );
     }
 }
