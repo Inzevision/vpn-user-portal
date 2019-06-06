@@ -72,7 +72,6 @@
         "lc/openvpn-connection-manager": "^1",
         "paragonie/constant_time_encoding": "^2",
         "php": ">=7.2",
-        "phpseclib/phpseclib": "^2.0",
         "psr/log": "^1"
     },
     "require-dev": {
