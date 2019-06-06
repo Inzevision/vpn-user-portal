@@ -17,6 +17,14 @@ use fyrkat\openssl\PrivateKey;
 use fyrkat\openssl\X509;
 use LC\Portal\FileIO;
 
+/**
+ * CA implementation based on fyrkat/openssl.
+ *
+ * Current limitation: it does not allow one to specify the *exact* moment the
+ * certificate expires. As we currently rely on this behavior, e.g. to expire
+ * issued certificates after 8 hours, this is not a complete replacement for
+ * the EasyRsa backend.
+ */
 class FyrkatOpenSslCa implements CaInterface
 {
     /** @var string */
@@ -51,6 +59,12 @@ class FyrkatOpenSslCa implements CaInterface
      */
     public function init()
     {
+        $privateKeyFile = sprintf('%s/ca.key', $this->caDir);
+        if (FileIO::exists($privateKeyFile)) {
+            // we already have a private key file...
+            return;
+        }
+
         $privateKey = new PrivateKey($this->keyConfig);
         $caCsr = CSR::generate(
             new DN(
@@ -64,7 +78,7 @@ class FyrkatOpenSslCa implements CaInterface
 
         $caCert = $caCsr->sign(null, $privateKey, 3650, $this->caConfig);
         FileIO::writeFile(sprintf('%s/ca.crt', $this->caDir), (string) $caCert);
-        FileIO::writeFile(sprintf('%s/ca.key', $this->caDir), $privateKey->getPrivateKeyPem(null), 0600);
+        FileIO::writeFile($privateKeyFile, $privateKey->getPrivateKeyPem(null), 0600);
     }
 
     public function caCert(): string
