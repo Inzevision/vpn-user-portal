@@ -363,6 +363,7 @@ return [
         'vendor/paragonie/constant_time_encoding/src',
         'vendor/phpunit/phpunit/src',
         'vendor/psr/log/Psr/Log',
+        'vendor/fyrkat/openssl/src/fyrkat/openssl'
     ],
 
     // A list of individual files to include in analysis
