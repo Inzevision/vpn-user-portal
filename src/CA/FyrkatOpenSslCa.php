@@ -112,7 +112,7 @@ class FyrkatOpenSslCa implements CaInterface
             $clientKey
         );
 
-        $clientCert = $clientCsr->sign($caCert, $caPrivateKey, 365, $this->clientConfig);
+        $clientCert = $clientCsr->sign($caCert, $caPrivateKey, $expiresAt, $this->clientConfig);
 
         return new CertInfo(
             (string) $clientCert,
