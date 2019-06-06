@@ -351,12 +351,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fyrkat/php-openssl.git",
-                "reference": "9116d54a2634f1ef9261358584703cb3181c4426"
+                "reference": "c4d70e0bd72567cc80e746647bde63ffff456678"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fyrkat/php-openssl/zipball/9116d54a2634f1ef9261358584703cb3181c4426",
-                "reference": "9116d54a2634f1ef9261358584703cb3181c4426",
+                "url": "https://api.github.com/repos/fyrkat/php-openssl/zipball/c4d70e0bd72567cc80e746647bde63ffff456678",
+                "reference": "c4d70e0bd72567cc80e746647bde63ffff456678",
                 "shasum": ""
             },
             "require": {
@@ -383,7 +383,7 @@
                 "source": "https://github.com/fyrkat/php-openssl/tree/master",
                 "issues": "https://github.com/fyrkat/php-openssl/issues"
             },
-            "time": "2019-06-06T09:32:07+00:00"
+            "time": "2019-06-06T11:06:33+00:00"
         },
         {
             "name": "lc/openvpn-connection-manager",

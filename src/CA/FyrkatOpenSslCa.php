@@ -63,10 +63,8 @@ class FyrkatOpenSslCa implements CaInterface
         );
 
         $caCert = $caCsr->sign(null, $privateKey, 3650, $this->caConfig);
-        $caKeyPem = '';
-        $privateKey->export($caKeyPem, null, $this->keyConfig);
         FileIO::writeFile(sprintf('%s/ca.crt', $this->caDir), (string) $caCert);
-        FileIO::writeFile(sprintf('%s/ca.key', $this->caDir), (string) $caKeyPem, 0600);
+        FileIO::writeFile(sprintf('%s/ca.key', $this->caDir), $privateKey->getPrivateKeyPem(null), 0600);
     }
 
     public function caCert(): string
@@ -90,12 +88,10 @@ class FyrkatOpenSslCa implements CaInterface
         );
 
         $serverCert = $serverCsr->sign($caCert, $caPrivateKey, 365, $this->serverConfig);
-        $serverKeyPem = '';
-        $serverKey->export($serverKeyPem, null, $this->keyConfig);
 
         return new CertInfo(
             (string) $serverCert,
-            $serverKeyPem,
+            $serverKey->getPrivateKeyPem(null),
             $serverCert->getValidFrom(),
             $serverCert->getValidTo()
         );
@@ -117,12 +113,10 @@ class FyrkatOpenSslCa implements CaInterface
         );
 
         $clientCert = $clientCsr->sign($caCert, $caPrivateKey, 365, $this->clientConfig);
-        $clientKeyPem = '';
-        $clientKey->export($clientKeyPem, null, $this->keyConfig);
 
         return new CertInfo(
             (string) $clientCert,
-            $clientKeyPem,
+            $clientKey->getPrivateKeyPem(null),
             $clientCert->getValidFrom(),
             $clientCert->getValidTo()
         );
