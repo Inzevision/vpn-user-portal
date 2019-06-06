@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d1cf4d24359806e399799d30cc71d814",
+    "content-hash": "8cdcce687fed6b8942f2b1cd49e504a2",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -347,16 +347,16 @@
         },
         {
             "name": "fyrkat/openssl",
-            "version": "dev-config",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fyrkat/php-openssl.git",
-                "reference": "9a874d14f5038d1bd0c66a814de7c3e9279f2f25"
+                "reference": "9116d54a2634f1ef9261358584703cb3181c4426"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fyrkat/php-openssl/zipball/9a874d14f5038d1bd0c66a814de7c3e9279f2f25",
-                "reference": "9a874d14f5038d1bd0c66a814de7c3e9279f2f25",
+                "url": "https://api.github.com/repos/fyrkat/php-openssl/zipball/9116d54a2634f1ef9261358584703cb3181c4426",
+                "reference": "9116d54a2634f1ef9261358584703cb3181c4426",
                 "shasum": ""
             },
             "require": {
@@ -380,10 +380,10 @@
             ],
             "description": "Class wrappers for PHPs built-in openssl_* functions",
             "support": {
-                "source": "https://github.com/fyrkat/php-openssl/tree/config",
+                "source": "https://github.com/fyrkat/php-openssl/tree/master",
                 "issues": "https://github.com/fyrkat/php-openssl/issues"
             },
-            "time": "2019-06-06T07:43:20+00:00"
+            "time": "2019-06-06T09:32:07+00:00"
         },
         {
             "name": "lc/openvpn-connection-manager",

@@ -68,7 +68,7 @@
         "fkooman/php-saml-sp": "^0",
         "fkooman/secookie": "^2",
         "fkooman/sqlite-migrate": "^0",
-        "fyrkat/openssl": "dev-config",
+        "fyrkat/openssl": "dev-master",
         "lc/openvpn-connection-manager": "^1",
         "paragonie/constant_time_encoding": "^2",
         "php": ">=7.2",
