@@ -22,6 +22,10 @@
     "repositories": [
         {
             "type": "vcs",
+            "url": "https://github.com/fyrkat/php-openssl"
+        },
+        {
+            "type": "vcs",
             "url": "https://git.tuxed.net/LC/php-openvpn-connection-manager"
         },
         {
@@ -64,9 +68,11 @@
         "fkooman/php-saml-sp": "^0",
         "fkooman/secookie": "^2",
         "fkooman/sqlite-migrate": "^0",
+        "fyrkat/openssl": "dev-config",
         "lc/openvpn-connection-manager": "^1",
         "paragonie/constant_time_encoding": "^2",
         "php": ">=7.2",
+        "phpseclib/phpseclib": "^2.0",
         "psr/log": "^1"
     },
     "require-dev": {
