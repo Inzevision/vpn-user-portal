@@ -62,7 +62,7 @@ class FyrkatOpenSslCa implements CaInterface
         $caKeyPem = '';
         $privateKey->export($caKeyPem, null, $this->keyConfig);
         FileIO::writeFile(sprintf('%s/ca.crt', $this->caDir), (string) $caCert);
-        FileIO::writeFile(sprintf('%s/ca.key', $this->caDir), (string) $caKeyPem);
+        FileIO::writeFile(sprintf('%s/ca.key', $this->caDir), (string) $caKeyPem, 0600);
     }
 
     /**
