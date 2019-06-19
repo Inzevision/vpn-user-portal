@@ -44,9 +44,6 @@ class LogoutModule implements ServiceModuleInterface
                     // the SAML authentication backend...
                     $this->session->delete('_update_session_info');
                     $this->session->delete('_saml_auth_time');
-                    $this->session->delete('_two_factor_verified');
-                    $this->session->delete('_two_factor_enroll_redirect_to');
-                    $this->session->delete('_two_factor_verified');
                     $this->session->delete('_form_auth_user');
                     $this->session->delete('_form_auth_permission_list');
                     $this->session->delete('_form_auth_time');
