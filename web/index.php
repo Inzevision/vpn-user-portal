@@ -37,9 +37,6 @@ use LC\Portal\Http\RadiusAuth;
 use LC\Portal\Http\Request;
 use LC\Portal\Http\SamlModule;
 use LC\Portal\Http\Service;
-use LC\Portal\Http\TwoFactorEnrollModule;
-use LC\Portal\Http\TwoFactorHook;
-use LC\Portal\Http\TwoFactorModule;
 use LC\Portal\Http\UpdateSessionInfoHook;
 use LC\Portal\Http\VpnPortalModule;
 use LC\Portal\Init;
@@ -255,27 +252,8 @@ try {
         ]
     );
 
-    $twoFactorMethods = $portalConfig->getTwoFactorMethods();
-    if (0 !== count($twoFactorMethods)) {
-        $service->addBeforeHook(
-            'two_factor',
-            new TwoFactorHook(
-                $storage,
-                $session,
-                $tpl,
-                $portalConfig->getRequireTwoFactor()
-            )
-        );
-    }
-
     $service->addBeforeHook('disabled_user', new DisabledUserHook($storage));
     $service->addBeforeHook('update_session_info', new UpdateSessionInfoHook($storage, $session, $sessionExpiry));
-
-    // two factor module
-    if (0 !== count($twoFactorMethods)) {
-        $twoFactorModule = new TwoFactorModule($storage, $session, $tpl);
-        $service->addModule($twoFactorModule);
-    }
 
     // isAdmin
     $service->addBeforeHook(
@@ -320,11 +298,6 @@ try {
         $serverManager
     );
     $service->addModule($adminPortalModule);
-
-    if (0 !== count($twoFactorMethods)) {
-        $twoFactorEnrollModule = new TwoFactorEnrollModule($storage, $twoFactorMethods, $session, $tpl);
-        $service->addModule($twoFactorEnrollModule);
-    }
 
     if (false !== $portalConfig->getEnableApi()) {
         $apiConfig = $portalConfig->getApiConfig();

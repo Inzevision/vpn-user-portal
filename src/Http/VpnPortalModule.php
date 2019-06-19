@@ -241,7 +241,6 @@ class VpnPortalModule implements ServiceModuleInterface
             function (Request $request, array $hookData): Response {
                 /** @var \LC\Portal\Http\UserInfo */
                 $userInfo = $hookData['auth'];
-                $hasTotpSecret = false !== $this->storage->getOtpSecret($userInfo->getUserId());
                 $userPermissions = $userInfo->getPermissionList();
                 $authorizedClients = $this->storage->getAuthorizations($userInfo->getUserId());
                 foreach ($authorizedClients as $k => $v) {
@@ -261,11 +260,9 @@ class VpnPortalModule implements ServiceModuleInterface
                     $this->tpl->render(
                         'vpnPortalAccount',
                         [
-                            'hasTotpSecret' => $hasTotpSecret,
                             'userInfo' => $userInfo,
                             'userPermissions' => $userPermissions,
                             'authorizedClients' => $authorizedClients,
-                            'twoFactorMethods' => $this->portalConfig->getTwoFactorMethods(),
                         ]
                     )
                 );
@@ -343,9 +340,7 @@ class VpnPortalModule implements ServiceModuleInterface
                 return new HtmlResponse(
                     $this->tpl->render(
                         'vpnPortalDocumentation',
-                        [
-                            'twoFactorMethods' => $this->portalConfig->getTwoFactorMethods(),
-                        ]
+                        []
                     )
                 );
             }

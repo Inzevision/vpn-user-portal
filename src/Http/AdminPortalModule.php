@@ -122,7 +122,6 @@ class AdminPortalModule implements ServiceModuleInterface
                             'userId' => $userId,
                             'userMessages' => $userMessages,
                             'clientCertificateList' => $clientCertificateList,
-                            'hasTotpSecret' => false !== $this->storage->getOtpSecret($userId),
                             'isDisabled' => $this->storage->isDisabledUser($userId),
                             'isSelf' => $adminUserId === $userId, // the admin is viewing their own account
                         ]
@@ -178,11 +177,6 @@ class AdminPortalModule implements ServiceModuleInterface
                     case 'enableUser':
                         $this->storage->enableUser($userId);
                         $this->storage->addUserMessage($userId, 'notification', 'account (re)enabled');
-                        break;
-
-                    case 'deleteTotpSecret':
-                        $this->storage->deleteOtpSecret($userId);
-                        $this->storage->addUserMessage($userId, 'notification', 'TOTP secret deleted');
                         break;
 
                     default:

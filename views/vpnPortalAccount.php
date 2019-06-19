@@ -26,19 +26,6 @@ $this->layout('base', ['activeItem' => 'account']); ?>
             </td>
         </tr>
         <?php endif; ?>
-
-        <?php if (0 !== count($twoFactorMethods)): ?>
-        <tr>
-            <th><?=$this->t('Two-factor Authentication'); ?></th>
-            <td>
-                <?php if ($hasTotpSecret): ?>
-                    <span class="plain"><?=$this->t('TOTP'); ?></span>
-                <?php else: ?>
-                    <a href="two_factor_enroll"><?=$this->t('Enroll'); ?></a>
-                <?php endif; ?>
-            </td>
-        </tr>
-        <?php endif; ?>
     </table>
 
     <?php if (0 !== count($authorizedClients)): ?>

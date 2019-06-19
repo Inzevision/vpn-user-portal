@@ -47,24 +47,6 @@ class InputValidation
         return $profileId;
     }
 
-    public static function totpSecret(string $totpSecret): string
-    {
-        if (1 !== preg_match('/^[A-Z0-9]{32}$/', $totpSecret)) {
-            throw new InputValidationException('invalid "totp_secret"');
-        }
-
-        return $totpSecret;
-    }
-
-    public static function totpKey(string $totpKey): string
-    {
-        if (1 !== preg_match('/^[0-9]{6}$/', $totpKey)) {
-            throw new InputValidationException('invalid "totp_key"');
-        }
-
-        return $totpKey;
-    }
-
     public static function clientId(string $clientId): string
     {
         if (1 !== preg_match('/^(?:[\x20-\x7E])+$/', $clientId)) {

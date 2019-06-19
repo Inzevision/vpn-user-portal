@@ -72,27 +72,6 @@ class PortalConfig extends Config
         return $configValue;
     }
 
-    public function getRequireTwoFactor(): bool
-    {
-        if (null === $configValue = $this->optionalBool('requireTwoFactor')) {
-            return false;
-        }
-
-        return $configValue;
-    }
-
-    /**
-     * @return array<string>
-     */
-    public function getTwoFactorMethods(): array
-    {
-        if (null === $configValue = $this->optionalStringArray('twoFactorMethods')) {
-            return [];
-        }
-
-        return $configValue;
-    }
-
     /**
      * @return array<string,string>
      */
