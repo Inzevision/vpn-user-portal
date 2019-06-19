@@ -24,7 +24,6 @@ try {
 
     $storage->cleanConnectionLog(new DateTime('now -32 days'));
     $storage->cleanExpiredCertificates(new DateTime('now -7 days'));
-    $storage->cleanOtpLog(new DateTime('now -5 minutes'));
     $storage->cleanUserMessages(new DateTime('now -32 days'));
 } catch (Exception $e) {
     echo sprintf('ERROR: %s', $e->getMessage()).PHP_EOL;

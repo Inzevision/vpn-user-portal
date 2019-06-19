@@ -355,7 +355,6 @@ return [
         'vendor/bacon/bacon-qr-code/src',
         'vendor/fkooman/jwt/src',
         'vendor/fkooman/oauth2-server/src',
-        'vendor/fkooman/otp-verifier/src',
         'vendor/fkooman/php-saml-sp/src',
         'vendor/fkooman/secookie/src',
         'vendor/fkooman/sqlite-migrate/src',
