@@ -311,7 +311,12 @@ try {
             );
 
             $serverList = $config->getSection('FormRadiusAuthentication')->getItem('serverList');
-            $userAuth = new RadiusAuth($logger, $serverList);
+            $useGroupFile = null;
+            $groupFile = sprintf('%s/config/user_groups.json', $baseDir);
+            if (FileIO::exists($groupFile)) {
+                $useGroupFile = $groupFile;
+            }
+            $userAuth = new RadiusAuth($logger, $serverList, $useGroupFile);
             if ($config->getSection('FormRadiusAuthentication')->hasItem('addRealm')) {
                 $userAuth->setRealm($config->getSection('FormRadiusAuthentication')->getItem('addRealm'));
             }
