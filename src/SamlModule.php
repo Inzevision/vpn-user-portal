@@ -119,7 +119,8 @@ class SamlModule implements ServiceModuleInterface
             function (Request $request, array $hookData) {
                 try {
                     $this->samlSp->handleResponse(
-                        $request->getPostParameter('SAMLResponse')
+                        $request->getPostParameter('SAMLResponse'),
+                        $request->getPostParameter('RelayState', false)
                     );
 
                     return new RedirectResponse($request->getPostParameter('RelayState'));
